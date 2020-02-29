@@ -39,15 +39,24 @@ int     ft_numlen(int num)
 int    validate(int argc, char **argv)
 {
     int i;
-    int num;
+    int j;
+    int arr[argc - 1];
 
     i = 1;
     while (i < argc)
     {
         if (check_arg(argv[i]) == -1)
             return (-1);
-        if (ft_strlen(argv[i]) != ft_numlen(ft_atoi(argv[i])))
+        arr[i - 1] = ft_atoi(argv[i]);
+        if (ft_strlen(argv[i]) != ft_numlen(arr[i - 1]))
             return(-1);
+        j = 0;
+        while (j < i - 1)
+        {
+            if (arr[j] == arr[i - 1])
+                return (-1);
+            j++;
+        }
         i++;
     }
     return (0);
