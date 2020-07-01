@@ -1,5 +1,37 @@
 #include "push_swap.h"
 
+int	traverse_rest(t_inf **inf, int center, int num_to_send, int rotate_num)
+{
+	t_stack *temp;
+	
+	while (num_to_send > 0)
+	{
+		if ((*inf)->stack_name == 'a')
+			temp = (*inf)->a;
+		else
+			temp = (*inf)->b;
+		if (((*inf)->stack_name == 'a' && temp->num < center) ||
+		((*inf)->stack_name == 'b' && temp->num > center))
+		{
+			num_to_send--;
+			if ((*inf)->stack_name == 'a')
+				push(&((*inf)->a), &((*inf)->b), &((*inf)->instr), 'b');
+			else
+				push(&((*inf)->b), &((*inf)->a), &((*inf)->instr), 'a');
+		}
+		else
+		{
+			if ((*inf)->stack_name == 'a')
+				rotate(&((*inf)->a), &((*inf)->instr), 'a');
+			else
+				rotate(&((*inf)->b), &((*inf)->instr), 'b');
+			
+			rotate_num++;
+		}
+	}
+	return(rotate_num);
+}
+
 int	midsort_a(t_inf **inf, int center, int num_to_send)
 {
 	t_stack *temp;
@@ -89,6 +121,7 @@ int	midsort(t_inf **inf, int *list, int len, int num_chunks_in_from)
 	t_stack **from;
 	t_stack **to;
 
+	ft_printf("midsort\n");
 	if ((*inf)->stack_name == 'a')
 	{
 		from = &((*inf)->a);
@@ -116,5 +149,6 @@ int	midsort(t_inf **inf, int *list, int len, int num_chunks_in_from)
 			rotate_num--;
 		}
 	}
+	ft_printf("midsort finished\n");
 	return(num_to_send);
 }

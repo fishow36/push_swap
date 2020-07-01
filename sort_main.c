@@ -10,6 +10,7 @@ int	sort_stack(t_inf **inf, t_stack **chunks_a, t_stack **chunks_b)
 
 	if ((*inf)->a && *chunks_a && is_sorted((*inf)->a, (*chunks_a)->num, 'a') == 0)
 	{
+		ft_printf("sort a\n");
 		len = (*chunks_a)->num;
 		if (len == 1 && stack_len(*chunks_a) > 1)
 		{
@@ -50,6 +51,8 @@ int	sort_stack(t_inf **inf, t_stack **chunks_a, t_stack **chunks_b)
 	}
 	else if ((*inf)->b != NULL)
 	{
+		ft_printf("sort b\n");
+		print_stacks((*inf)->a, (*inf)->b);
 		len = (*chunks_b)->num;
 		if (len == 1)
 		{

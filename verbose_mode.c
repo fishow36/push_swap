@@ -32,6 +32,7 @@ void	print_stacks(t_stack *a, t_stack *b)
 	{
 		ft_printf("*");
 		print_next(&temp_a);
+		ft_printf("*");
 		print_next(&temp_b);
 		ft_printf("*\n");
 		i++;
