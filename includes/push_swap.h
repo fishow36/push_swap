@@ -14,17 +14,20 @@ void    stack_push(int cont, t_stack **stack);
 void stack_push_back(int cont, t_stack **stack);
 int stack_pop(t_stack **stack);
 void    stack_free(t_stack **stack);
+void    free_main(t_stack **a, t_stack **b, t_stack **instr);
 int	stack_len(t_stack *stack);
 int *list_from_stack(t_stack *stack, int len);
 
 t_stack *create_stack_a(int argc, int *argv);
-int *char_to_int(int argc, char **argv);
+int		*char_to_int(int argc, char **argv, int v);
 t_stack *create_instr(int *check);
 void    print_stack(t_stack *stack);
+void	print_stacks(t_stack *a, t_stack *b);
 
 void    print_instr(t_stack *instr);
 
 int		*bubble_sort(int  *arr, int len);
+int		nbr_len(long n);
 
 void    swap(t_stack **stack, t_stack **instr, char stack_name);
 void    push(t_stack **from, t_stack **to, t_stack **instr, char stack_name);
@@ -38,10 +41,10 @@ void sort_3b(t_stack **stack, t_stack **instr);
 void	sort_3a_nonemptystack(t_stack **a, t_stack **b, t_stack **instr);
 void	sort_3b_nonemptystack(t_stack **a, t_stack **b, t_stack **instr);
 
-void apply_instr(t_stack **a,  t_stack **b, t_stack *instr);
-void check_instr(int *list, int len);
+void apply_instr(t_stack **a,  t_stack **b, t_stack *instr, int v);
+void check_instr(int *list, int len, int v);
 
-int *list_validation (int argc, char **argv);
+int		*list_validation (int argc, char **argv, int v);
 
 int	midsort(t_stack **from, t_stack **to, t_stack **instr, int *list, int len, char stack_name, int num_chunks_in_from);
 

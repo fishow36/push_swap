@@ -3,6 +3,7 @@
 int	midsort_a(t_stack **a, t_stack **b, t_stack **instr, int center, int num_to_send)
 {
 	t_stack *temp;
+	t_stack *temp2;
 	int rotate_num;
 
 	rotate_num = 0;
@@ -17,10 +18,11 @@ int	midsort_a(t_stack **a, t_stack **b, t_stack **instr, int center, int num_to_
 		temp = temp->next;
 	while (temp && temp->num < center)
 	{
+		temp2 = temp->prev;
 		reverse_rotate(a, instr, 'a');
 		push(a, b, instr, 'b');
 		num_to_send--;
-		temp = temp->prev;
+		temp = temp2;
 	}
 	while (num_to_send > 0)
 	{
@@ -85,10 +87,9 @@ int	midsort(t_stack **from, t_stack **to, t_stack **instr, int *list, int len, c
 	int num_to_send;
 	int rotate_num;
 
+
 	if (is_sorted(*from, len, stack_name) == 1)
-	{
 		return (0);
-	}
 	for_sort = bubble_sort(list, len);
 	center = len / 2;
 	num_to_send = (len % 2 == 0 && stack_name == 'a') ?

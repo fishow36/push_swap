@@ -21,9 +21,10 @@ void apply_instr2(t_stack **a,  t_stack **b, t_stack *instr)
         reverse_rotate(a, &fill, 'a');
         reverse_rotate(b, &fill, 'b');
     }
+    stack_free(&fill);
 }
 
-void apply_instr(t_stack **a,  t_stack **b, t_stack *instr)
+void apply_instr(t_stack **a,  t_stack **b, t_stack *instr, int v)
 {
     t_stack *fill;
 
@@ -47,14 +48,21 @@ void apply_instr(t_stack **a,  t_stack **b, t_stack *instr)
             rotate(a, &fill, 'a');
         else
             apply_instr2(a, b, instr);    
+        if (v == 1)
+            print_stacks(*a, *b);
         instr = instr->next;
-        print_stack(*a);
-        print_stack(*b);
     }
     stack_free(&fill);
 }
 
-void check_instr(int *list, int len)
+void    free_main(t_stack **a, t_stack **b, t_stack **instr)
+{
+    stack_free(a);
+    stack_free(b);
+    stack_free(instr);
+}
+
+void check_instr(int *list, int len, int v)
 {
     t_stack *a;
     t_stack *b;
@@ -62,6 +70,7 @@ void check_instr(int *list, int len)
     int check;
 
     a = create_stack_a(len, list);
+    print_stack(a);
     free(list);
     b = NULL;
     check = 0;
@@ -69,19 +78,13 @@ void check_instr(int *list, int len)
     if ((instr == NULL && check == 1) || !a)
     {
         ft_printf("Error\n");
-        stack_free(&a);
-        stack_free(&b);
+        free_main(&a, &b, &instr);
         return;
     }
-    apply_instr(&a, &b, instr);
-    if (is_sorted(a, len, 'a') == 1 && b == NULL)
+    apply_instr(&a, &b, instr, v);
+    if (is_sorted(a, stack_len(a), 'a') == 1 && b == NULL)
         ft_printf("%s\n", "OK");
     else
         ft_printf("%s\n", "KO");
-    // print_stack(a);
-    print_instr(instr);
-    stack_free(&a);
-    stack_free(&b);
-    stack_free(&instr);
-    return;
+    free_main(&a, &b, &instr);
 }

@@ -42,8 +42,6 @@ void    rotate(t_stack **stack, t_stack **instr, char stack_name)
         {
             cont = stack_pop(stack);
             stack_push_back(cont, stack);
-            // ft_printf("r%c\n", stack_name);
-            // print_stack(*stack);
             stack_push_back(stack_name == 'a' ? 12 : 18, instr);
         }
     }
@@ -62,7 +60,7 @@ void    reverse_rotate(t_stack **stack, t_stack **instr, char stack_name)
             while (temp->next->next)
                 temp = temp->next;
             cont = temp->next->num;
-            // free(temp->next);
+            free(temp->next);
             temp->next = NULL;
             stack_push(cont, stack);
             stack_push_back((stack_name == 'a') ? 112 : 118, instr);

@@ -20,20 +20,20 @@ int		nbr_len(long n)
 	return (len);
 }
 
-int		*char_to_int(int argc, char **argv)
+int		*char_to_int(int argc, char **argv, int v)
 {
 	int	*list;
 	int	i;
 
 	i = 0;
-	list = (int*)malloc(sizeof(int) * (argc - 1));
+	list = (int*)malloc(sizeof(int) * (argc - (v + 1)));
 	if (!list)
 		return(NULL);
-	while (i < argc - 1)
+	while (i < argc - (v + 1))
 	{
-		list[i] = ft_atoi(argv[i + 1]);
-		if (ft_strlen(argv[i + 1]) != nbr_len((long)list[i]) ||
-		(list[i] == 0 && argv[i + 1][0] != '0'))
+		list[i] = ft_atoi(argv[i + v + 1]);
+		if (ft_strlen(argv[i + v + 1]) != nbr_len((long)list[i]) ||
+		(list[i] == 0 && argv[i + v + 1][0] != '0'))
 		{
 			free(list);
 			return(NULL);
@@ -75,19 +75,18 @@ int		*copy_list(int *list, int len)
 	return(res);
 }
 
-int		*list_validation (int argc, char **argv)
+int		*list_validation (int argc, char **argv, int v)
 {
-	int		i;
 	int		*list;
 	int		*for_sort;
 	int		prev;
 
-	list = char_to_int(argc, argv);
+	list = char_to_int(argc, argv, v);
 	if (!list)
 		return(NULL);
-	for_sort = copy_list(list, argc - 1);
-	for_sort = bubble_sort(for_sort, argc - 1);
-	if (has_doubles(for_sort, argc - 1) == 1)
+	for_sort = copy_list(list, argc - (v + 1));
+	for_sort = bubble_sort(for_sort, argc - (v + 1));
+	if (has_doubles(for_sort, argc - (v + 1)) == 1)
 	{
 		free(list);
 		free(for_sort);

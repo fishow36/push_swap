@@ -3,6 +3,7 @@
 void	replace_swaps(t_stack **instr)
 {
 	t_stack *temp;
+	t_stack *temp2;
 
 	temp = *instr;
 	while (temp && temp->next)
@@ -11,7 +12,9 @@ void	replace_swaps(t_stack **instr)
 		temp->num == 58 && temp->next->num == 52)
 		{
 			temp->num = 55;
-			temp->next = temp->next->next;
+			free(temp->next);
+			temp2 = temp->next->next;
+			temp->next = temp2;
 		}
 		temp = temp->next;
 	}
