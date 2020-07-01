@@ -1,63 +1,98 @@
 #include "push_swap.h"
 
-int     check_arg(char *arg)
+int		nbr_len(long n)
 {
-    int i;
+	int	len;
 
-    i = 1;
-    if (arg[0] != '-' && arg[0] != '+' && !(arg[0] >= '0' && arg[0] <= '9'))
-        return(-1);
-    while (arg[i])
-    {
-        if (!(arg[i] >= '0' && arg[i] != '9'))
-            return(0);
-        i++;
-    }
-    return(0);
+	len = 0;
+	if (n == 0)
+		return (1);
+	if (n < 0)
+	{
+		n = n * -1;
+		len++;
+	}
+	while (n > 0)
+	{
+		n = n / 10;
+		len++;
+	}
+	return (len);
 }
 
-int     ft_numlen(int num)
+int		*char_to_int(int argc, char **argv)
 {
-    int len;
+	int	*list;
+	int	i;
 
-    len = 0;
-    if (num == 0)
-        return(1);
-    else if (num < 0)
-    {
-        len++;
-        num = num * -1;
-    }
-    while (num > 0)
-    {
-        len++;
-        num = num / 10;
-    }
-    return(len);
+	i = 0;
+	list = (int*)malloc(sizeof(int) * (argc - 1));
+	if (!list)
+		return(NULL);
+	while (i < argc - 1)
+	{
+		list[i] = ft_atoi(argv[i + 1]);
+		if (ft_strlen(argv[i + 1]) != nbr_len((long)list[i]) ||
+		(list[i] == 0 && argv[i + 1][0] != '0'))
+		{
+			free(list);
+			return(NULL);
+		}
+		i++;
+	}
+	return(list);
 }
 
-int    validate(int argc, char **argv)
+int		has_doubles(int *list, int len)
 {
-    int i;
-    int j;
-    int arr[argc - 1];
+	int	i;
+	int	prev;
+	
+	i = 1;
+	prev = list[0];
+	while(i < len)
+	{
+		if (list[i] == prev)
+			return(1);
+		prev = list[i];
+		i++;
+	}
+	return(0);
+}
 
-    i = 1;
-    while (i < argc)
-    {
-        if (check_arg(argv[i]) == -1)
-            return (-1);
-        arr[i - 1] = ft_atoi(argv[i]);
-        if (ft_strlen(argv[i]) != ft_numlen(arr[i - 1]))
-            return(-1);
-        j = 0;
-        while (j < i - 1)
-        {
-            if (arr[j] == arr[i - 1])
-                return (-1);
-            j++;
-        }
-        i++;
-    }
-    return (0);
+int		*copy_list(int *list, int len)
+{
+	int	*res;
+	int	i;
+
+	res = (int*)malloc(sizeof(int) * len);
+	i = 0;
+	while (i < len)
+	{
+		res[i] = list[i];
+		i++;
+	}
+	return(res);
+}
+
+int		*list_validation (int argc, char **argv)
+{
+	int		i;
+	int		*list;
+	int		*for_sort;
+	int		prev;
+
+	list = char_to_int(argc, argv);
+	if (!list)
+		return(NULL);
+	for_sort = copy_list(list, argc - 1);
+	for_sort = bubble_sort(for_sort, argc - 1);
+	if (has_doubles(for_sort, argc - 1) == 1)
+	{
+		free(list);
+		free(for_sort);
+		return(NULL);
+	}
+	free(for_sort);
+	return (list);
 }
