@@ -2,13 +2,13 @@
 
 /* -1 -- error */
 /* 1 -- finished */
-int	sort_stack(t_stack **a, t_stack **b, t_stack **instr, t_stack **chunks_a, t_stack **chunks_b)
+int	sort_stack(t_inf **inf, t_stack **chunks_a, t_stack **chunks_b)
 {
 	int	*list;
 	int len;
 	int sent;
 
-	if (*a && *chunks_a && is_sorted(*a, (*chunks_a)->num, 'a') == 0)
+	if ((*inf)->a && *chunks_a && is_sorted((*inf)->a, (*chunks_a)->num, 'a') == 0)
 	{
 		len = (*chunks_a)->num;
 		if (len == 1 && stack_len(*chunks_a) > 1)
@@ -18,7 +18,7 @@ int	sort_stack(t_stack **a, t_stack **b, t_stack **instr, t_stack **chunks_a, t_
 		}
 		else if (len == 2)
 		{
-			sort_2(a, 'a', instr);
+			sort_2(&((*inf)->a), 'a', &((*inf)->instr));
 			if (stack_len(*chunks_a) > 1)
 			{
 				stack_pop(chunks_a);
@@ -26,17 +26,18 @@ int	sort_stack(t_stack **a, t_stack **b, t_stack **instr, t_stack **chunks_a, t_
 			}
 		}
 		else if (len == 3 && stack_len(*chunks_a) == 1)
-			sort_3a(a, instr);
+			sort_3a(&((*inf)->a), &((*inf)->instr));
 		else if (len == 3)
 		{
-			sort_3a_nonemptystack(a, b, instr);
+			sort_3a_nonemptystack(&((*inf)->a), &((*inf)->b), &((*inf)->instr));
 			stack_pop(chunks_a);
 			(*chunks_a)->num += 3;
 		}
 		else if (len != 0)
 		{
-			list = list_from_stack(*a, len);
-			sent = midsort(a, b, instr, list, len, 'a', stack_len(*chunks_a));
+			list = list_from_stack((*inf)->a, len);
+			(*inf)->stack_name = 'a';
+			sent = midsort(inf, list, len, stack_len(*chunks_a));
 			free(list);
 			if (sent == -1)
 				return(-1);
@@ -45,40 +46,41 @@ int	sort_stack(t_stack **a, t_stack **b, t_stack **instr, t_stack **chunks_a, t_
 			if ((*chunks_a)->num == 0)
 				stack_pop(chunks_a);
 		}
-		return(sort_stack(a, b, instr, chunks_a, chunks_b));
+		return(sort_stack(inf, chunks_a, chunks_b));
 	}
-	else if ((*b) != NULL)
+	else if ((*inf)->b != NULL)
 	{
 		len = (*chunks_b)->num;
 		if (len == 1)
 		{
-			push(b, a, instr, 'a');
+			push(&((*inf)->b), &((*inf)->a), &((*inf)->instr), 'a');
 			stack_pop(chunks_b);
 		}
 		else if (len == 2)
 		{
-			sort_2(b, 'b', instr);
-			push(b, a, instr, 'a');
-			push(b, a, instr, 'a');
+			sort_2(&((*inf)->b), 'b', &((*inf)->instr));
+			push(&((*inf)->b), &((*inf)->a), &((*inf)->instr), 'a');
+			push(&((*inf)->b), &((*inf)->a), &((*inf)->instr), 'a');
 			stack_pop(chunks_b);
 		}
 		else if (len == 3 && stack_len(*chunks_b) == 1)
 		{
-			sort_3b(b, instr);
-			push(b, a, instr, 'a');
-			push(b, a, instr, 'a');
-			push(b, a, instr, 'a');
+			sort_3b(&((*inf)->b), &((*inf)->instr));
+			push(&((*inf)->b), &((*inf)->a), &((*inf)->instr), 'a');
+			push(&((*inf)->b), &((*inf)->a), &((*inf)->instr), 'a');
+			push(&((*inf)->b), &((*inf)->a), &((*inf)->instr), 'a');
 			stack_pop(chunks_b);
 		}
 		else if (len == 3)
 		{
-			sort_3b_nonemptystack(a, b, instr);
+			sort_3b_nonemptystack(&((*inf)->a), &((*inf)->b), &((*inf)->instr));
 			stack_pop(chunks_b);
 		}
 		else
 		{
-			list = list_from_stack(*b, len);
-			sent = midsort(b, a, instr, list, len, 'b', stack_len(*chunks_b));
+			list = list_from_stack((*inf)->b, len);
+			(*inf)->stack_name = 'b';
+			sent = midsort(inf, list, len, stack_len(*chunks_b));
 			free(list);
 			if (sent == -1)
 				return(-1);
@@ -86,7 +88,7 @@ int	sort_stack(t_stack **a, t_stack **b, t_stack **instr, t_stack **chunks_a, t_
 			{
 				while (len > 0)
 				{
-					push(b, a, instr, 'a');
+					push(&((*inf)->b), &((*inf)->a), &((*inf)->instr), 'a');
 					len--;
 				}
 				stack_pop(chunks_b);
@@ -99,7 +101,7 @@ int	sort_stack(t_stack **a, t_stack **b, t_stack **instr, t_stack **chunks_a, t_
 					stack_pop(chunks_b);	
 			}
 		}
-		return(sort_stack(a, b, instr, chunks_a, chunks_b));
+		return(sort_stack(inf, chunks_a, chunks_b));
 	}
 	else
 		return(1);

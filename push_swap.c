@@ -31,7 +31,7 @@ int		main(int argc, char **argv)
 	inf->b = NULL;
 	chunks_a = stack_new(argc - 1);
 	chunks_b = NULL;
-	sort_stack(&(inf->a), &(inf->b), &(inf->instr), &chunks_a, &chunks_b);
+	sort_stack(&inf, &chunks_a, &chunks_b);
 	// print_stack(a);
 	// print_stack(b);
 	shorten(&(inf->instr));

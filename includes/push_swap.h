@@ -11,9 +11,10 @@ typedef	struct	s_stack
 
 typedef struct s_inf
 {
-	t_stack *a;
-	t_stack *b;
-	t_stack *instr;
+	t_stack		*a;
+	t_stack		*b;
+	t_stack		*instr;
+	char		stack_name;
 }			t_inf;
 
 t_stack *stack_new(int cont);
@@ -53,9 +54,9 @@ void check_instr(int *list, int len, int v);
 
 int		*list_validation (int argc, char **argv, int v);
 
-int	midsort(t_stack **from, t_stack **to, t_stack **instr, int *list, int len, char stack_name, int num_chunks_in_from);
+int	midsort(t_inf **inf, int *list, int len, int num_chunks_in_from);
 
-int	sort_stack(t_stack **a, t_stack **b, t_stack **instr, t_stack **chunks_a, t_stack **chunks_b);
+int	sort_stack(t_inf **inf, t_stack **chunks_a, t_stack **chunks_b);
 
 void	replace_swaps(t_stack **instr);
 void	replace_rotates(t_stack **instr);
