@@ -8,9 +8,6 @@ int	sort_stack(t_stack **a, t_stack **b, t_stack **instr, t_stack **chunks_a, t_
 	int len;
 	int sent;
 
-	// ft_printf("%d chunks in b\n", stack_len(*chunks_b));
-	// print_stack(*a);
-	// print_stack(*b);
 	if (*a && *chunks_a && is_sorted(*a, (*chunks_a)->num, 'a') == 0)
 	{
 		len = (*chunks_a)->num;

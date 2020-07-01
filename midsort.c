@@ -80,6 +80,7 @@ int midsort_b(t_stack **b, t_stack **a, t_stack **instr, int center, int num_to_
 	return(rotate_num);
 }
 
+/* stack_name -- тот, который сортируем (= from)*/
 int	midsort(t_stack **from, t_stack **to, t_stack **instr, int *list, int len, char stack_name, int num_chunks_in_from)
 {
 	int *for_sort;

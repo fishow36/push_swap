@@ -2,129 +2,129 @@
 
 void	replace_swaps(t_stack **instr)
 {
-	t_stack *temp;
-	t_stack *temp2;
+	t_stack *tmp;
+	t_stack *tmp2;
 
-	temp = *instr;
-	while (temp && temp->next)
+	tmp = *instr;
+	while (tmp && tmp->next)
 	{
-		if ((temp->num == 52 && temp->next->num == 58) ||
-		temp->num == 58 && temp->next->num == 52)
+		if ((tmp->num == 52 && tmp->next->num == 58) ||
+		tmp->num == 58 && tmp->next->num == 52)
 		{
-			temp->num = 55;
-			free(temp->next);
-			temp2 = temp->next->next;
-			temp->next = temp2;
+			tmp->num = 55;
+			free(tmp->next);
+			tmp2 = tmp->next->next;
+			tmp->next = tmp2;
 		}
-		temp = temp->next;
+		tmp = tmp->next;
 	}
 }
 
 void	replace_rotates(t_stack **instr)
 {
-	t_stack *temp;
-	t_stack *temp2;
+	t_stack *tmp;
+	t_stack *tmp2;
 
-	temp = *instr;
-	while (temp && temp->next)
+	tmp = *instr;
+	while (tmp && tmp->next)
 	{
-		if ((temp->num == 12 && temp->next->num == 18) ||
-		temp->num == 18 && temp->next->num == 12)
+		if ((tmp->num == 12 && tmp->next->num == 18) ||
+		tmp->num == 18 && tmp->next->num == 12)
 		{
-			temp->num = 11;
-			temp2 = temp->next->next;
-			free(temp->next);
-			temp->next = temp2;
+			tmp->num = 11;
+			tmp2 = tmp->next->next;
+			free(tmp->next);
+			tmp->next = tmp2;
 		}
-		else if ((temp->num == 112 && temp->next->num == 118) ||
-		temp->num == 118 && temp->next->num == 112)
+		else if ((tmp->num == 112 && tmp->next->num == 118) ||
+		tmp->num == 118 && tmp->next->num == 112)
 		{
-			temp->num = 111;
-			temp2 = temp->next->next;
-			free(temp->next);
-			temp->next = temp2;
+			tmp->num = 111;
+			tmp2 = tmp->next->next;
+			free(tmp->next);
+			tmp->next = tmp2;
 		}
-		temp = temp->next;
+		tmp = tmp->next;
 	}
 }
 
 void	replace_pushes(t_stack **instr)
 {
-	t_stack *temp;
-	t_stack *temp2;
+	t_stack *tmp;
+	t_stack *tmp2;
 
-	temp = *instr;
-	while (temp)
+	tmp = *instr;
+	while (tmp)
 	{
-		if (temp->next &&  temp->next->next &&
-		((temp->next->num == 62 && temp->next->next->num == 68)
-		|| (temp->next->num == 68 && temp->next->next->num == 62)))
+		if (tmp->next &&  tmp->next->next &&
+		((tmp->next->num == 62 && tmp->next->next->num == 68)
+		|| (tmp->next->num == 68 && tmp->next->next->num == 62)))
 		{
-			temp2 = temp->next;
-			temp->next = temp->next->next->next;
-			free(temp2->next);
-			free(temp2);
-			if (temp->prev)
+			tmp2 = tmp->next;
+			tmp->next = tmp->next->next->next;
+			free(tmp2->next);
+			free(tmp2);
+			if (tmp->prev)
 			{
-				temp = temp->prev;
-				if (temp->prev)
-					temp = temp->prev;
+				tmp = tmp->prev;
+				if (tmp->prev)
+					tmp = tmp->prev;
 			}
 		}
-		temp = temp->next;
+		tmp = tmp->next;
 	}
 }
 
 void	replace_pushswap(t_stack **instr)
 {
-	t_stack *temp;
-	t_stack *temp2;
+	t_stack *tmp;
+	t_stack *tmp2;
 
-	temp = *instr;
-	while (temp)
+	tmp = *instr;
+	while (tmp)
 	{
-		if (temp->next && temp->next->next && temp->next->next->next &&
-		temp->next->next->next->next && temp->num == 68 && temp->next->num == 68
-		&& temp->next->next->num == 58 && temp->next->next->next->num == 62
-		&& temp->next->next->next->next->num == 62)
+		if (tmp->next && tmp->next->next && tmp->next->next->next &&
+		tmp->next->next->next->next && tmp->num == 68 && tmp->next->num == 68
+		&& tmp->next->next->num == 58 && tmp->next->next->next->num == 62
+		&& tmp->next->next->next->next->num == 62)
 		{
-			temp->num = 52;
-			temp2 = temp->next->next->next->next->next;
-			free(temp->next);
-			free(temp->next->next);
-			free(temp->next->next->next);
-			free(temp->next->next->next->next);
-			temp->next = temp2;
+			tmp->num = 52;
+			tmp2 = tmp->next->next->next->next->next;
+			free(tmp->next);
+			free(tmp->next->next);
+			free(tmp->next->next->next);
+			free(tmp->next->next->next->next);
+			tmp->next = tmp2;
 		}
-		temp = temp->next;
+		tmp = tmp->next;
 	}
 }
 
 void	replace_r_rr(t_stack **instr)
 {
-	t_stack *temp;
-	t_stack *temp2;
+	t_stack *tmp;
+	t_stack *tmp2;
 
-	temp = *instr;
-	while (temp)
+	tmp = *instr;
+	while (tmp)
 	{
-		if (temp->next &&  temp->next->next &&
-		((temp->next->num == 118 && temp->next->next->num == 18)
-		|| (temp->next->num == 18 && temp->next->next->num == 118)
-		|| (temp->next->num == 12 && temp->next->next->num == 112)
-		|| (temp->next->num == 112 && temp->next->next->num == 12)))
+		if (tmp->next &&  tmp->next->next &&
+		((tmp->next->num == 118 && tmp->next->next->num == 18)
+		|| (tmp->next->num == 18 && tmp->next->next->num == 118)
+		|| (tmp->next->num == 12 && tmp->next->next->num == 112)
+		|| (tmp->next->num == 112 && tmp->next->next->num == 12)))
 		{
-			temp2 = temp->next;
-			temp->next = temp->next->next->next;
-			free(temp2->next);
-			free(temp2);
-			if (temp->prev)
+			tmp2 = tmp->next;
+			tmp->next = tmp->next->next->next;
+			free(tmp2->next);
+			free(tmp2);
+			if (tmp->prev)
 			{
-				temp = temp->prev;
-				if (temp->prev)
-					temp = temp->prev;
+				tmp = tmp->prev;
+				if (tmp->prev)
+					tmp = tmp->prev;
 			}
 		}
-		temp = temp->next;
+		tmp = tmp->next;
 	}
 }

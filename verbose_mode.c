@@ -1,22 +1,29 @@
 #include "push_swap.h"
 
 /* в инте макс. 11 знаков -- поля по 12 */
+
+void	print_next(t_stack **stack)
+{
+	if (*stack)
+	{
+		ft_printf("%11d ", (*stack)->num);
+		*stack = (*stack)->next;
+	}
+	else
+		ft_printf("            ");
+}
+
 void	print_stacks(t_stack *a, t_stack *b)
 {
-	int len_a;
-	int len_b;
-	int len;
-	int i;
-	int j;
-	t_stack *temp_a;
-	t_stack *temp_b;
+	int			len;
+	int			i;
+	t_stack		*temp_a;
+	t_stack		*temp_b;
 
-	len_a = stack_len(a);
-	len_b = stack_len(b);
-	if (len_a > len_b)
-		len = len_a;
+	if (stack_len(a) > stack_len(b))
+		len = stack_len(a);
 	else
-		len = len_b;
+		len = stack_len(b);
 	temp_a = a;
 	temp_b = b;
 	i = 0;
@@ -24,21 +31,8 @@ void	print_stacks(t_stack *a, t_stack *b)
 	while (i < len)
 	{
 		ft_printf("*");
-		if (temp_a)
-		{
-			ft_printf("%11d ", temp_a->num);
-			temp_a = temp_a->next;
-		}
-		else
-			ft_printf("            ");
-		ft_printf("*");
-		if (temp_b)
-		{
-			ft_printf("%11d ", temp_b->num);
-			temp_b = temp_b->next;
-		}
-		else
-			ft_printf("            ");
+		print_next(&temp_a);
+		print_next(&temp_b);
 		ft_printf("*\n");
 		i++;
 	}	

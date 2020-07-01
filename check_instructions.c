@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void apply_instr2(t_stack **a,  t_stack **b, t_stack *instr)
+void    apply_instr2(t_stack **a,  t_stack **b, t_stack *instr)
 {
     t_stack *fill;
 
@@ -14,6 +14,8 @@ void apply_instr2(t_stack **a,  t_stack **b, t_stack *instr)
         reverse_rotate(a, &fill, 'a');
     else if (instr->num == 118)
         reverse_rotate(b, &fill, 'b');
+    else if (instr->num == 12)
+            rotate(a, &fill, 'a');
     else if (instr->num == 18)
         rotate(b, &fill, 'b');
     else
@@ -24,7 +26,7 @@ void apply_instr2(t_stack **a,  t_stack **b, t_stack *instr)
     stack_free(&fill);
 }
 
-void apply_instr(t_stack **a,  t_stack **b, t_stack *instr, int v)
+void    apply_instr(t_stack **a,  t_stack **b, t_stack *instr, int v)
 {
     t_stack *fill;
 
@@ -44,8 +46,6 @@ void apply_instr(t_stack **a,  t_stack **b, t_stack *instr, int v)
             push(b, a, &fill, 'a');
         else if (instr->num == 68)
             push(a, b, &fill, 'b');
-        else if (instr->num == 12)
-            rotate(a, &fill, 'a');
         else
             apply_instr2(a, b, instr);    
         if (v == 1)
@@ -62,12 +62,12 @@ void    free_main(t_stack **a, t_stack **b, t_stack **instr)
     stack_free(instr);
 }
 
-void check_instr(int *list, int len, int v)
+void    check_instr(int *list, int len, int v)
 {
-    t_stack *a;
-    t_stack *b;
-    t_stack *instr;
-    int check;
+    t_stack     *a;
+    t_stack     *b;
+    t_stack     *instr;
+    int         check;
 
     a = create_stack_a(len, list);
     print_stack(a);

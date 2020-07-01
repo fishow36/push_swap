@@ -9,6 +9,13 @@ typedef	struct	s_stack
 	struct s_stack *prev;
 }				t_stack;
 
+typedef struct s_inf
+{
+	t_stack *a;
+	t_stack *b;
+	t_stack *instr;
+}			t_inf;
+
 t_stack *stack_new(int cont);
 void    stack_push(int cont, t_stack **stack);
 void stack_push_back(int cont, t_stack **stack);
