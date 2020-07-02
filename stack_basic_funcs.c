@@ -47,10 +47,13 @@ int stack_pop(t_stack **stack)
     int cont;
     t_stack *to_free;
 
-    cont = (*stack)->num;
-    to_free = *stack;
-    *stack = (*stack)->next;
-    free(to_free);
+    if (*stack)
+    {
+        cont = (*stack)->num;
+        to_free = *stack;
+        *stack = (*stack)->next;
+        free(to_free);
+    }
     
     return(cont);
 }

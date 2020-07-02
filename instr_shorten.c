@@ -83,17 +83,17 @@ void	replace_pushswap(t_stack **instr)
 	tmp = *instr;
 	while (tmp)
 	{
-		if (tmp->next && tmp->next->next && tmp->next->next->next &&
+		if (tmp && tmp->next && tmp->next->next && tmp->next->next->next &&
 		tmp->next->next->next->next && tmp->num == 68 && tmp->next->num == 68
 		&& tmp->next->next->num == 58 && tmp->next->next->next->num == 62
 		&& tmp->next->next->next->next->num == 62)
 		{
 			tmp->num = 52;
 			tmp2 = tmp->next->next->next->next->next;
-			free(tmp->next);
-			free(tmp->next->next);
-			free(tmp->next->next->next);
 			free(tmp->next->next->next->next);
+			free(tmp->next->next->next);
+			free(tmp->next->next);
+			free(tmp->next);
 			tmp->next = tmp2;
 		}
 		tmp = tmp->next;
@@ -108,7 +108,7 @@ void	replace_r_rr(t_stack **instr)
 	tmp = *instr;
 	while (tmp)
 	{
-		if (tmp->next &&  tmp->next->next &&
+		if (tmp && tmp->next &&  tmp->next->next &&
 		((tmp->next->num == 118 && tmp->next->next->num == 18)
 		|| (tmp->next->num == 18 && tmp->next->next->num == 118)
 		|| (tmp->next->num == 12 && tmp->next->next->num == 112)
@@ -118,7 +118,7 @@ void	replace_r_rr(t_stack **instr)
 			tmp->next = tmp->next->next->next;
 			free(tmp2->next);
 			free(tmp2);
-			if (tmp->prev)
+			if (tmp && tmp->prev)
 			{
 				tmp = tmp->prev;
 				if (tmp->prev)

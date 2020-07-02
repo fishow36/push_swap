@@ -121,7 +121,6 @@ int	midsort(t_inf **inf, int *list, int len, int num_chunks_in_from)
 	t_stack **from;
 	t_stack **to;
 
-	ft_printf("midsort\n");
 	if ((*inf)->stack_name == 'a')
 	{
 		from = &((*inf)->a);
@@ -149,6 +148,5 @@ int	midsort(t_inf **inf, int *list, int len, int num_chunks_in_from)
 			rotate_num--;
 		}
 	}
-	ft_printf("midsort finished\n");
 	return(num_to_send);
 }
