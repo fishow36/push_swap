@@ -81,7 +81,7 @@ int is_sorted(t_stack *stack, int len, char stack_name)
     while (len > 1)
     {
         if ((stack_name == 'a' && prev > temp->num) ||
-        stack_name == 'b' && prev < temp->num)
+        (stack_name == 'b' && prev < temp->num))
             return(0);
         prev = temp->num;
         temp = temp->next;

@@ -20,7 +20,7 @@ void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 
 	symb = (unsigned char)c;
 	p_dst = (unsigned char *)dst;
-	p_src = (unsigned char *)src;list
+	p_src = (unsigned char *)src;
 	if (!dst && !src)
 		return (NULL);
 	while (n--)

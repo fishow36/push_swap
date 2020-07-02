@@ -9,7 +9,7 @@ void	replace_swaps(t_stack **instr)
 	while (tmp && tmp->next)
 	{
 		if ((tmp->num == 52 && tmp->next->num == 58) ||
-		tmp->num == 58 && tmp->next->num == 52)
+		(tmp->num == 58 && tmp->next->num == 52))
 		{
 			tmp->num = 55;
 			free(tmp->next);
@@ -29,7 +29,7 @@ void	replace_rotates(t_stack **instr)
 	while (tmp && tmp->next)
 	{
 		if ((tmp->num == 12 && tmp->next->num == 18) ||
-		tmp->num == 18 && tmp->next->num == 12)
+		(tmp->num == 18 && tmp->next->num == 12))
 		{
 			tmp->num = 11;
 			tmp2 = tmp->next->next;
@@ -37,7 +37,7 @@ void	replace_rotates(t_stack **instr)
 			tmp->next = tmp2;
 		}
 		else if ((tmp->num == 112 && tmp->next->num == 118) ||
-		tmp->num == 118 && tmp->next->num == 112)
+		(tmp->num == 118 && tmp->next->num == 112))
 		{
 			tmp->num = 111;
 			tmp2 = tmp->next->next;
