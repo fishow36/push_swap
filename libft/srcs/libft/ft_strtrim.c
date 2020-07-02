@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbrogg <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: eshor <eshor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/15 17:08:34 by mbrogg            #+#    #+#             */
-/*   Updated: 2019/09/15 17:08:35 by mbrogg           ###   ########.fr       */
+/*   Created: 2019/09/24 18:03:57 by eshor             #+#    #+#             */
+/*   Updated: 2019/09/26 19:29:49 by eshor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,28 @@
 
 char	*ft_strtrim(char const *s)
 {
-	char	*res;
-	char	*dup;
-	char	*temp;
-	size_t	len;
+	char	*result;
+	int		len;
+	int		i;
 
 	if (!s)
 		return (NULL);
-	dup = ft_spaces((char *)s);
-	if (*dup == '\0')
+	len = ft_strlen(s) - 1;
+	i = 0;
+	while (s[len] == ' ' || s[len] == '\t' || s[len] == '\n')
+		len--;
+	while (*s == ' ' || *s == '\t' || *s == '\n')
 	{
-		if (!(res = (char *)malloc(sizeof(char))))
-			return (NULL);
-		*res = '\0';
-		return (res);
+		s++;
+		len--;
 	}
-	temp = ft_spaces_rev(dup + ft_strlen(dup) - 1);
-	if (!(res = ft_strnew(temp - dup)))
+	if (len <= 0)
+		return (ft_strnew(1));
+	result = (char*)malloc(sizeof(char) * (len + 2));
+	if (!result)
 		return (NULL);
-	len = 0;
-	while (dup != temp)
-		res[len++] = *dup++;
-	res[len] = '\0';
-	return (res);
+	while (i < len + 1)
+		result[i++] = *s++;
+	result[i] = '\0';
+	return (result);
 }

@@ -3,34 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbrogg <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: eshor <eshor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/14 19:58:21 by mbrogg            #+#    #+#             */
-/*   Updated: 2019/09/14 19:58:23 by mbrogg           ###   ########.fr       */
+/*   Created: 2019/09/22 11:30:03 by eshor             #+#    #+#             */
+/*   Updated: 2019/09/25 20:02:15 by eshor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strstr(const char *big, const char *little)
+char	*ft_strstr(const char *haystack, const char *needle)
 {
-	char	*str1;
-	char	*str2;
-	char	*res;
+	int		h;
+	int		n;
+	char	*ptr_h;
+	char	*ptr_n;
 
-	res = NULL;
-	str1 = (char *)big;
-	if (!(ft_strlen(little)))
-		return (str1);
-	while (*str1 != '\0')
+	if (!*needle)
+		return ((char*)haystack);
+	ptr_h = (char*)haystack;
+	ptr_n = (char*)needle;
+	h = 0;
+	while (ptr_h[h] != '\0')
 	{
-		res = str1;
-		str2 = (char *)little;
-		while (*str1 == *str2++ && *str1 != '\0')
-			str1++;
-		if (*(str2 - 1) == '\0')
-			return (res);
-		str1 = res + 1;
+		if (ptr_h[h] == ptr_n[0])
+		{
+			n = 0;
+			while (ptr_n[n] != '\0' && ptr_h[h + n] == ptr_n[n])
+				n++;
+			if (ptr_n[n] == '\0')
+				return ((char*)&ptr_h[h]);
+		}
+		h++;
 	}
 	return (NULL);
 }

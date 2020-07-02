@@ -3,38 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbrogg <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: eshor <eshor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/14 19:51:59 by mbrogg            #+#    #+#             */
-/*   Updated: 2019/09/14 19:56:08 by mbrogg           ###   ########.fr       */
+/*   Created: 2019/09/22 11:27:35 by eshor             #+#    #+#             */
+/*   Updated: 2019/09/24 20:02:45 by eshor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_atoi(const char *str)
+int		ft_atoi(const char *nptr)
 {
-	char			*s;
-	unsigned long	res;
-	unsigned long	war;
-	size_t			sign;
+	int sign;
+	int result;
 
-	sign = 0;
-	s = (char *)str;
-	res = 0;
-	war = (~res / 2) / 10;
-	s = ft_spaces(s);
-	sign = (*s == '-' ? 1 : 2);
-	if (*s == '+' || *s == '-')
-		s++;
-	while (ft_isdigit(*s))
+	sign = 1;
+	while (*nptr == ' ' || *nptr == '\n' || *nptr == '\t' ||
+		*nptr == '\r' || *nptr == '\v' || *nptr == '\f')
+		nptr++;
+	if (*nptr == '-')
 	{
-		if (sign != 1 && (war < res || (war == res && *str - '0' > 7)))
-			return (-1);
-		else if (sign == 1 && (war < res || (war == res && *str - '0' > 8)))
-			return (0);
-		res = res * 10 + *s++ - '0';
+		sign = -1;
+		nptr++;
 	}
-	res *= (sign == 1 ? -1 : 1);
-	return ((int)res);
+	else if (*nptr == '+')
+		nptr++;
+	result = 0;
+	while (*nptr >= '0' && *nptr <= '9')
+	{
+		result = result * 10 + *nptr - '0';
+		nptr++;
+	}
+	return (result * sign);
 }

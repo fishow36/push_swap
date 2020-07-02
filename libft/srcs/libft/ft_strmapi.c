@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmap.c                                        :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbrogg <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: eshor <eshor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/14 21:04:48 by mbrogg            #+#    #+#             */
-/*   Updated: 2019/09/14 21:04:49 by mbrogg           ###   ########.fr       */
+/*   Created: 2019/09/24 18:02:47 by eshor             #+#    #+#             */
+/*   Updated: 2019/09/26 20:08:23 by eshor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,21 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	*res;
-	size_t	i;
+	int				len;
+	char			*res;
+	unsigned int	i;
 
-	i = 0;
-	if (!s || !f)
+	if (!s)
 		return (NULL);
-	res = ft_strnew(ft_strlen(s));
+	len = ft_strlen(s);
+	res = ft_strnew(len);
+	i = 0;
 	if (!res)
 		return (NULL);
-	while (s[i] != '\0')
+	while (s[i])
 	{
 		res[i] = f(i, s[i]);
 		i++;
 	}
-	res[i] = '\0';
 	return (res);
 }

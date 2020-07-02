@@ -3,31 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbrogg <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: eshor <eshor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/07 20:30:07 by mbrogg            #+#    #+#             */
-/*   Updated: 2019/09/14 19:56:29 by mbrogg           ###   ########.fr       */
+/*   Created: 2019/09/22 12:59:22 by eshor             #+#    #+#             */
+/*   Updated: 2019/09/24 20:21:05 by eshor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
+void	*ft_memccpy(void *dest, const void *src, int c, size_t n)
 {
-	unsigned char		*p_dst;
-	const unsigned char	*p_src;
-	unsigned char		symb;
+	unsigned char	*ptr_d;
+	unsigned char	*ptr_s;
+	size_t			i;
 
-	symb = (unsigned char)c;
-	p_dst = (unsigned char *)dst;
-	p_src = (unsigned char *)src;
-	if (!dst && !src)
-		return (NULL);
-	while (n--)
+	ptr_d = (unsigned char*)dest;
+	ptr_s = (unsigned char*)src;
+	i = 0;
+	while (i < n)
 	{
-		*p_dst++ = *p_src++;
-		if (*(p_src - 1) == symb)
-			return (p_dst);
+		ptr_d[i] = ptr_s[i];
+		if (ptr_s[i] == (unsigned char)c)
+			return (dest + i + 1);
+		i++;
 	}
 	return (NULL);
 }

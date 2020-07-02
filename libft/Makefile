@@ -73,12 +73,8 @@ SOURCES :=	aux.c \
 			libft/ft_strnequ.c \
 			libft/ft_strsub.c \
 			libft/ft_strjoin.c \
-			libft/ft_spaces.c \
-			libft/ft_spaces_rev.c \
-			libft/ft_strisempty.c \
 			libft/ft_strtrim.c \
 			libft/ft_strsplit.c \
-			libft/ft_free_split.c \
 			libft/ft_itoa.c \
 			libft/ft_putchar_fd.c \
 			libft/ft_putstr_fd.c \
@@ -94,9 +90,6 @@ SOURCES :=	aux.c \
 			libft/ft_lstdel.c \
 			libft/ft_lstiter.c \
 			libft/ft_lstmap.c \
-			libft/ft_lstdelone_s.c \
-			libft/ft_lstnew_fd.c \
-			libft/ft_strjoin_s.c \
 			libft/get_next_line.c \
 
 
