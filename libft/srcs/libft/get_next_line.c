@@ -19,147 +19,52 @@
 **	If check is passed the func returns (1), otherwise (0)
 */
 
-static int	check_null(const int fd, char **p_null, char **line)
+char	*fill_line(char *r_fd, char **line)
 {
-	char test[1];
+	char *tmp;
 
-	*p_null = NULL;
-	if (!line)
-		return (0);
-	if (!(*line = ft_strnew(0)))
-		return (0);
-	if (fd >= 0 && fd < _SC_OPEN_MAX)
+	tmp = r_fd;
+	if ((ft_strchr(r_fd, '\n')))
 	{
-		if (read(fd, test, 0) == -1)
-			return (0);
-		else
-			return (1);
-	}
-	else
-		return (0);
-}
-
-/*
-**	The func returns new string (size is BUFF_SIZE) to initialize
-**	the buf in main func, also there are searching corresponging
-**	item of list (head is static) to add new or using old lists
-**	Searching is implemented by using descriptor of GNL
-*/
-
-static char	*initbuf_search(t_list **head, t_list **list, size_t fd)
-{
-	t_list	*temp;
-	t_list	*prev;
-
-	if (!(*head))
-	{
-		if (!(*head = ft_lstnew_fd(fd)))
+		*line = ft_strsub(r_fd, 0,
+		ft_strlen(r_fd) - ft_strlen(ft_strchr(r_fd, '\n')));
+		if (!(r_fd = ft_strchr(r_fd, '\n')) ||
+		!(r_fd = ft_strsub(r_fd, 1, ft_strlen(r_fd) - 1)))
 			return (NULL);
-		*list = *head;
 	}
 	else
 	{
-		temp = *head;
-		while (temp)
-		{
-			if (fd == temp->content_size && (*list = temp))
-				return (ft_strnew(BUFF_SIZE));
-			prev = temp;
-			temp = temp->next;
-		}
-		if (!(*list = ft_lstnew_fd(fd)))
+		*line = ft_strdup(r_fd);
+		r_fd = ft_strdup("");
+		if (!(*line) || !r_fd)
 			return (NULL);
-		prev->next = *list;
 	}
-	return (ft_strnew(BUFF_SIZE));
+	ft_strdel(&tmp);
+	return (r_fd);
 }
 
-/*
-**	It checks the remainer of reading
-*/
-
-static char	*check_data_list(char **line, char **content, char *buf)
+int		get_next_line(const int fd, char **line)
 {
-	char	*temp;
-	char	*to_free;
+	char		buf[BUFF_SIZE + 1];
+	static char	*r[MAX_FD];
+	ssize_t		ret;
+	char		*tmp;
 
-	if (!(*content))
-		return (NULL);
-	else if ((temp = ft_strchr(*content, '\n')))
-	{
-		*temp = '\0';
-		free(*line);
-		*line = ft_strdup(*content);
-		to_free = *content;
-		*content = ft_strdup(temp + 1);
-		free(to_free);
-		free(buf);
-		return (*content);
-	}
-	else
-	{
-		free(*line);
-		*line = ft_strdup(*content);
-		free(*content);
-		return (NULL);
-	}
-}
-
-/*
-**	The loop while in main func of GNL project
-**	There is parsing of string ('\n') If it has been
-**	found -> write the remainer in list->content,
-**	otherwise just write buf into the line
-**	If there was mistake, the func would return (-1)
-**	Otherwise (0)
-*/
-
-static	int	loop_gnl(char **buf, char **tp, char **ln, t_list **lt)
-{
-	if ((*tp = ft_strchr(*buf, '\n')))
-	{
-		**tp = '\0';
-		free((*lt)->content);
-		if (!((*lt)->content = (char *)ft_strdup(*tp + 1)))
-			return (-1);
-	}
-	if (!(ft_strjoin_s(ln, *buf)))
+	if (fd < 0 || fd > MAX_FD || !line || (!r[fd] && !(r[fd] = ft_strnew(1))))
 		return (-1);
-	return (0);
-}
-
-/*
-**	The main func of GET NEXT LINE project
-** 	returnable value is -1, 0, 1
-** 	-1	-> 	there must has been fault
-** 	0	->	current point in file is ending -> EOF
-** 	1	->	the line has been read successfully
-*/
-
-int			get_next_line(const int fd, char **line)
-{
-	static t_list	*hd;
-	t_list			*lt;
-	size_t			count;
-	char			*temp;
-	char			*buf;
-
-	if (!(buf = initbuf_search(&hd, &lt, fd)) || !check_null(fd, &temp, line))
+	while (!ft_strchr(r[fd], '\n') && (ret = read(fd, buf, BUFF_SIZE)) > 0)
+	{
+		tmp = r[fd];
+		buf[ret] = '\0';
+		if (!(r[fd] = ft_strjoin(r[fd], buf)))
+			return (-1);
+		ft_strdel(&tmp);
+	}
+	if (ret == -1 || !r[fd])
 		return (-1);
-	if ((lt->content = check_data_list(line, (char **)&(lt->content), buf)))
-		return (1);
-	while ((count = read(fd, buf, BUFF_SIZE)) && !temp)
-	{
-		buf[count] = '\0';
-		if (loop_gnl(&buf, &temp, line, &lt) == -1)
-			return (-1);
-	}
-	if (count)
-	{
-		buf[count] = '\0';
-		if (!(ft_strjoin_s((char **)&(lt->content), buf)))
-			return (-1);
-	}
-	free(buf);
-	return ((lt->content || **line != '\0') ? 1 : ft_lstdelone_s(&hd, &lt));
+	if (ft_strcmp(r[fd], "") == 0 && ret == 0)
+		return (0);
+	if ((r[fd] = fill_line(r[fd], line)) == NULL)
+		return (-1);
+	return (1);
 }

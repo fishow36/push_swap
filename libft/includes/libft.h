@@ -20,7 +20,8 @@
 # include <fcntl.h>
 # include <limits.h>
 
-# define BUFF_SIZE 2
+# define BUFF_SIZE 30
+# define MAX_FD 1024
 
 void			*ft_memset(void *b, int c, size_t len);
 void			ft_bzero(void *s, size_t n);

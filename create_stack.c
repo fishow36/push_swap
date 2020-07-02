@@ -20,8 +20,8 @@ int			instr_to_int(char *str)
 	int		i;
 
 	res = 0;
-	i = -1;
-	while (str[i++])
+	i = 0;
+	while (str[i])
 	{
 		if (str[i] == 'r')
 			res = res * 10 + 1;
@@ -35,6 +35,7 @@ int			instr_to_int(char *str)
 			res = res * 10 + 8;
 		else
 			return(-1);
+		i++;
 	}
 	if (res == 52 || res == 58 || res == 55 || res == 62 || res == 68 || res ==
 	12 || res == 18 || res == 11 || res == 112 || res == 118 || res == 111)
