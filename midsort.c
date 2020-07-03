@@ -6,10 +6,7 @@ int	traverse_rest(t_inf **inf, int center, int num_to_send, int rotate_num)
 	
 	while (num_to_send > 0)
 	{
-		if ((*inf)->stack_name == 'a')
-			temp = (*inf)->a;
-		else
-			temp = (*inf)->b;
+		temp = ((*inf)->stack_name == 'a') ? (*inf)->a : (*inf)->b;
 		if (((*inf)->stack_name == 'a' && temp->num < center) ||
 		((*inf)->stack_name == 'b' && temp->num > center))
 		{
@@ -56,20 +53,7 @@ int	midsort_a(t_inf **inf, int center, int num_to_send)
 		num_to_send--;
 		temp = temp2;
 	}
-	while (num_to_send > 0)
-	{
-		temp = (*inf)->a;
-		if (temp->num < center)
-		{
-			num_to_send--;
-			push(&((*inf)->a), &((*inf)->b), &((*inf)->instr), 'b');
-		}
-		else
-		{
-			rotate(&((*inf)->a), &((*inf)->instr), 'a');
-			rotate_num++;
-		}
-	}
+	rotate_num = traverse_rest(inf, center, num_to_send, rotate_num);
 	return(rotate_num);
 }
 
@@ -95,20 +79,7 @@ int midsort_b(t_inf **inf, int center, int num_to_send)
 		num_to_send--;
 		temp = temp->prev;
 	}
-	while (num_to_send > 0)
-	{
-		temp = (*inf)->b;
-		if (temp->num > center)
-		{
-			num_to_send--;
-			push(&((*inf)->b), &((*inf)->a), &((*inf)->instr), 'a');;
-		}
-		else
-		{
-			rotate(&((*inf)->b), &((*inf)->instr), 'b');
-			rotate_num++;
-		}
-	}
+	rotate_num = traverse_rest(inf, center, num_to_send, rotate_num);
 	return(rotate_num);
 }
 
@@ -121,16 +92,8 @@ int	midsort(t_inf **inf, int *list, int len, int num_chunks_in_from)
 	t_stack **from;
 	t_stack **to;
 
-	if ((*inf)->stack_name == 'a')
-	{
-		from = &((*inf)->a);
-		to = &((*inf)->b);
-	}
-	else
-	{
-		from = &((*inf)->b);
-		to = &((*inf)->a);
-	}
+	from = ((*inf)->stack_name == 'a') ? &((*inf)->a) : &((*inf)->b);
+	to = ((*inf)->stack_name == 'a') ? &((*inf)->b) : &((*inf)->a);
 	if (is_sorted(*from, len, (*inf)->stack_name) == 1)
 		return (0);
 	for_sort = bubble_sort(list, len);
@@ -142,11 +105,8 @@ int	midsort(t_inf **inf, int *list, int len, int num_chunks_in_from)
 		rotate_num = midsort_b(inf, for_sort[len / 2], num_to_send);
 	if (num_chunks_in_from != 1)
 	{
-		while (rotate_num > 0)
-		{
+		while (rotate_num-- > 0)
 			reverse_rotate(from, &((*inf)->instr), (*inf)->stack_name);
-			rotate_num--;
-		}
 	}
 	return(num_to_send);
 }

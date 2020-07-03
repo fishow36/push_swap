@@ -9,10 +9,17 @@ void	shorten(t_stack **instr)
 	replace_r_rr(instr);
 }
 
+void	free_inf(t_inf **inf)
+{
+	stack_free(&(*inf)->a);
+	stack_free(&(*inf)->b);
+	stack_free(&(*inf)->instr);
+	free(*inf);
+}
+
 int		main(int argc, char **argv)
 {
 	int		*int_list;
-	t_stack *a;
 	t_stack *chunks_a;
 	t_stack *chunks_b;
 	t_inf	*inf;
@@ -32,11 +39,8 @@ int		main(int argc, char **argv)
 	chunks_a = stack_new(argc - 1);
 	chunks_b = NULL;
 	sort_stack(&inf, &chunks_a, &chunks_b);
-	// print_stack(a);
-	// print_stack(b);
 	shorten(&(inf->instr));
 	print_instr(inf->instr);
-	// ft_printf("total: %d instructions\n", stack_len(instr));
-	// free_main(&a, &b, &instr);
-	// free_main(&chunks_a, &chunks_b, &instr);
+	free_inf(&inf);
+	free_main(&chunks_a, &chunks_b);
 }
