@@ -22,13 +22,13 @@ void    stack_push(int cont, t_stack **stack);
 void stack_push_back(int cont, t_stack **stack);
 int stack_pop(t_stack **stack);
 void    stack_free(t_stack **stack);
-void    free_main(t_stack **a, t_stack **b, t_stack **instr);
+void    free_main(t_stack **a, t_stack **b);
 int	stack_len(t_stack *stack);
 int *list_from_stack(t_stack *stack, int len);
 
 t_stack *create_stack_a(int argc, int *argv);
 int		*char_to_int(int argc, char **argv, int v);
-t_stack *create_instr(int *check);
+int		create_instr(int *check, t_stack **a, t_stack **b, int v);
 void    print_stack(t_stack *stack);
 void	print_stacks(t_stack *a, t_stack *b);
 
@@ -49,7 +49,7 @@ void sort_3b(t_stack **stack, t_stack **instr);
 void	sort_3a_nonemptystack(t_stack **a, t_stack **b, t_stack **instr);
 void	sort_3b_nonemptystack(t_stack **a, t_stack **b, t_stack **instr);
 
-void apply_instr(t_stack **a,  t_stack **b, t_stack *instr, int v);
+void    apply_instr(t_stack **a,  t_stack **b, int num, int v);
 void check_instr(int *list, int len, int v);
 
 int		*list_validation (int argc, char **argv, int v);

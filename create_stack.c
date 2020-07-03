@@ -44,36 +44,28 @@ int			instr_to_int(char *str)
 		return(-1);  
 }
 
-t_stack		*free_str_return(char *str)
+int		free_str_return(char *str)
 {
 	free(str);
-	return(NULL);
+	return(-1);
 }
 
-t_stack		*create_instr(int *check)
+int		create_instr(int *check, t_stack **a, t_stack **b, int v)
 {
-	t_stack	*stack;
 	char	*str;
 	int		cont;
 
-	stack = NULL;
 	while (get_next_line(1, &str))
 	{
 		*check = 1;
 		cont = instr_to_int(str);
 		if (cont == -1)
 			return(free_str_return(str));
-		if (!stack)
-		{
-			stack = stack_new(cont);
-			if (!stack)
-				return(free_str_return(str));
-		}
 		else
-			stack_push_back(cont, &stack);
+			apply_instr(a, b, cont, v);
 		free(str);
 	}
-	return (stack);
+	return(0);
 }
 
 void		print_stack(t_stack *stack)
