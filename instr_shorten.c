@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   instr_shorten.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eshor <eshor@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/07/06 13:28:44 by eshor             #+#    #+#             */
+/*   Updated: 2020/07/06 14:45:03 by eshor            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	replace_swaps(t_stack **instr)
@@ -56,7 +68,7 @@ void	replace_pushes(t_stack **instr)
 	tmp = *instr;
 	while (tmp)
 	{
-		if (tmp->next &&  tmp->next->next &&
+		if (tmp->next && tmp->next->next &&
 		((tmp->next->num == 62 && tmp->next->next->num == 68)
 		|| (tmp->next->num == 68 && tmp->next->next->num == 62)))
 		{
@@ -108,7 +120,7 @@ void	replace_r_rr(t_stack **instr)
 	tmp = *instr;
 	while (tmp)
 	{
-		if (tmp && tmp->next &&  tmp->next->next &&
+		if (tmp && tmp->next && tmp->next->next && tmp->next->next->next &&
 		((tmp->next->num == 118 && tmp->next->next->num == 18)
 		|| (tmp->next->num == 18 && tmp->next->next->num == 118)
 		|| (tmp->next->num == 12 && tmp->next->next->num == 112)
@@ -116,15 +128,13 @@ void	replace_r_rr(t_stack **instr)
 		{
 			tmp2 = tmp->next;
 			tmp->next = tmp->next->next->next;
+			tmp->next->prev = tmp;
 			free(tmp2->next);
 			free(tmp2);
 			if (tmp && tmp->prev)
-			{
 				tmp = tmp->prev;
-				if (tmp->prev)
-					tmp = tmp->prev;
-			}
 		}
-		tmp = tmp->next;
+		else
+			tmp = tmp->next;
 	}
 }

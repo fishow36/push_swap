@@ -1,12 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eshor <eshor@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/07/06 13:28:50 by eshor             #+#    #+#             */
+/*   Updated: 2020/07/06 14:33:33 by eshor            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	shorten(t_stack **instr)
 {
 	replace_swaps(instr);
+	// ft_printf("validated\n");
 	replace_rotates(instr);
+	// ft_printf("validated\n");
 	replace_pushes(instr);
+	// ft_printf("validated\n");
 	replace_pushswap(instr);
+	// ft_printf("validated\n");
 	replace_r_rr(instr);
+	// ft_printf("validated\n");
 }
 
 void	free_inf(t_inf **inf)
