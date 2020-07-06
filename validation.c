@@ -6,7 +6,7 @@
 /*   By: eshor <eshor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/06 13:29:17 by eshor             #+#    #+#             */
-/*   Updated: 2020/07/06 13:29:18 by eshor            ###   ########.fr       */
+/*   Updated: 2020/07/06 15:05:58 by eshor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		*char_to_int(int argc, char **argv, int v)
 	i = 0;
 	list = (int*)malloc(sizeof(int) * (argc - (v + 1)));
 	if (!list)
-		return(NULL);
+		return (NULL);
 	while (i < argc - (v + 1))
 	{
 		list[i] = ft_atoi(argv[i + v + 1]);
@@ -48,28 +48,28 @@ int		*char_to_int(int argc, char **argv, int v)
 		(list[i] == 0 && argv[i + v + 1][0] != '0'))
 		{
 			free(list);
-			return(NULL);
+			return (NULL);
 		}
 		i++;
 	}
-	return(list);
+	return (list);
 }
 
 int		has_doubles(int *list, int len)
 {
 	int	i;
 	int	prev;
-	
+
 	i = 1;
 	prev = list[0];
-	while(i < len)
+	while (i < len)
 	{
 		if (list[i] == prev)
-			return(1);
+			return (1);
 		prev = list[i];
 		i++;
 	}
-	return(0);
+	return (0);
 }
 
 int		*copy_list(int *list, int len)
@@ -84,25 +84,24 @@ int		*copy_list(int *list, int len)
 		res[i] = list[i];
 		i++;
 	}
-	return(res);
+	return (res);
 }
 
-int		*list_validation (int argc, char **argv, int v)
+int		*list_validation(int argc, char **argv, int v)
 {
 	int		*list;
 	int		*for_sort;
-	int		prev;
 
 	list = char_to_int(argc, argv, v);
 	if (!list)
-		return(NULL);
+		return (NULL);
 	for_sort = copy_list(list, argc - (v + 1));
 	for_sort = bubble_sort(for_sort, argc - (v + 1));
 	if (has_doubles(for_sort, argc - (v + 1)) == 1)
 	{
 		free(list);
 		free(for_sort);
-		return(NULL);
+		return (NULL);
 	}
 	free(for_sort);
 	return (list);

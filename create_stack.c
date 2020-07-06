@@ -6,13 +6,13 @@
 /*   By: eshor <eshor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/06 13:28:41 by eshor             #+#    #+#             */
-/*   Updated: 2020/07/06 13:28:42 by eshor            ###   ########.fr       */
+/*   Updated: 2020/07/06 16:38:15 by eshor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_stack		*create_stack_a(int argc, int *argv)
+t_stack	*create_stack_a(int argc, int *argv)
 {
 	t_stack *stack;
 
@@ -23,10 +23,10 @@ t_stack		*create_stack_a(int argc, int *argv)
 		stack_push(argv[argc], &stack);
 		argc--;
 	}
-	return(stack);
+	return (stack);
 }
 
-int			instr_to_int(char *str)
+int		instr_to_int(char *str)
 {
 	int		res;
 	int		i;
@@ -46,19 +46,19 @@ int			instr_to_int(char *str)
 		else if (str[i] == 'b')
 			res = res * 10 + 8;
 		else
-			return(-1);
+			return (-1);
 	}
 	if (res == 52 || res == 58 || res == 55 || res == 62 || res == 68 || res ==
 	12 || res == 18 || res == 11 || res == 112 || res == 118 || res == 111)
-		return(res);
+		return (res);
 	else
-		return(-1);  
+		return (-1);
 }
 
 int		free_str_return(char *str)
 {
 	free(str);
-	return(-1);
+	return (-1);
 }
 
 int		create_instr(int *check, t_stack **a, t_stack **b, int v)
@@ -66,20 +66,20 @@ int		create_instr(int *check, t_stack **a, t_stack **b, int v)
 	char	*str;
 	int		cont;
 
-	while (get_next_line(1, &str))
+	while (get_next_line(0, &str))
 	{
 		*check = 1;
 		cont = instr_to_int(str);
 		if (cont == -1)
-			return(free_str_return(str));
+			return (free_str_return(str));
 		else
 			apply_instr(a, b, cont, v);
 		free(str);
 	}
-	return(0);
+	return (0);
 }
 
-void		print_instr(t_stack *instr)
+void	print_instr(t_stack *instr)
 {
 	t_stack *temp;
 
