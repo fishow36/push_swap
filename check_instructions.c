@@ -93,6 +93,5 @@ void	check_instr(int *list, int len, int v)
 		ft_printf("%s\n", "OK");
 	else
 		ft_printf("%s\n", "KO");
-	ft_printf("before last free\n");
 	free_main(&a, &b);
 }

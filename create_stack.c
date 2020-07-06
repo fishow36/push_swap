@@ -57,7 +57,7 @@ int		instr_to_int(char *str)
 
 int		free_str_return(char *str)
 {
-	free(str);
+	ft_strdel(&str);
 	return (-1);
 }
 
@@ -74,7 +74,7 @@ int		create_instr(int *check, t_stack **a, t_stack **b, int v)
 			return (free_str_return(str));
 		else
 			apply_instr(a, b, cont, v);
-		free(str);
+		ft_strdel(&str);
 	}
 	return (0);
 }

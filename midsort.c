@@ -104,10 +104,8 @@ int	midsort(t_inf **inf, int *list, int len, int num_chunks_in_from)
 	int		num_to_send;
 	int		rotate_num;
 	t_stack	**from;
-	t_stack	**to;
 
 	from = ((*inf)->stack_name == 'a') ? &((*inf)->a) : &((*inf)->b);
-	to = ((*inf)->stack_name == 'a') ? &((*inf)->b) : &((*inf)->a);
 	if (is_sorted(*from, len, (*inf)->stack_name) == 1)
 		return (0);
 	for_sort = bubble_sort(list, len);
